@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 /// <summary>
@@ -17,7 +18,7 @@ public class DataHandle
 
     public DataHandle()//constructor
     {
-        connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Ofek\Downloads\DataDemoLogin\DataDemoLogin\DataDemoLogin\Database2.mdf;Integrated Security=True";
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\User\Downloads\ofeklogin\DataDemoLogin\Database1.mdf;Integrated Security=True";
         connection = new SqlConnection(connectionString);
         cmd = new SqlCommand();
 
@@ -44,12 +45,77 @@ public class DataHandle
 
     }
 
-    public void AddUser()//adds user's info to the query
+    public void AddUser(string username, string password, string fname, string lname, string email, string city, string gender)//adds user's info to the query
     {
         cmd.Connection = connection;
         cmd.CommandText = "INSERT INTO Users VALUES('1234, 'aa'')";
         connection.Open();
         cmd.ExecuteNonQuery();
+        string error = "";
+        int success = 0;
+        if (fname != null || lname != null || username != null || password != null || email != null || city != null || gender != null)
+        {
+            error += "You must fill all fields!";
+            success--;
+        }
+        if(gender == "-1")
+        {
+            error += "Pick a gender. ";
+            success--;
+        }
+        if (!IsBasicEmailFormat(email))
+        {
+            error += "Email is not valid. ";
+            success--;
+
+        }
+        if (!IsPasswordGood(password))
+        {
+            error += "Password is not strong enough. ";
+            success--;
+        }
+
+
+
+    }
+
+
+    public static bool IsBasicEmailFormat(string email)
+    {
+        String BasicEmailPattern = @"^[^@]+@[^@]+\.[^@\.]*[a-zA-Z0-9]$";
+
+
+        if (string.IsNullOrWhiteSpace(email))
+        {
+
+            return false;
+        }
+
+        // The Regex.IsMatch method checks if the input string contains a match for the pattern.
+        return Regex.IsMatch(email, BasicEmailPattern);
+    }
+
+    public static bool IsPasswordGood(string password)
+    {
+        // The regex pattern uses positive lookaheads to enforce criteria.
+        // ^                        # Start of the string
+        // (?=.*[0-9])              # Lookahead: Must contain at least one digit
+        // (?=.*[A-Z])              # Lookahead: Must contain at least one uppercase letter
+        // (?=.*[a-z])              # Lookahead: Must contain at least one lowercase letter
+        // (?=.*[^a-zA-Z0-9\s])     # Lookahead: Must contain at least one special character
+        // .{8,}                    # Match: Any character, 8 or more times
+        // $                        # End of the string
+
+        string pattern = @"^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\s]).{8,}$";
+
+        if (string.IsNullOrEmpty(password))
+        {
+
+            return false;
+        }
+
+        // The Match method returns a match object if the entire string satisfies the pattern.
+        return Regex.IsMatch(password, pattern);
     }
 
 
