@@ -43,6 +43,7 @@ namespace DataDemoLogin
             this.txbemail = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cities = new System.Windows.Forms.ComboBox();
             this.gender = new System.Windows.Forms.GroupBox();
             this.male = new System.Windows.Forms.RadioButton();
             this.female = new System.Windows.Forms.RadioButton();
@@ -54,7 +55,6 @@ namespace DataDemoLogin
             this.txbpasslogin = new System.Windows.Forms.TextBox();
             this.txbuserlogin = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cities = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.gender.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -215,6 +215,35 @@ namespace DataDemoLogin
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // cities
+            // 
+            this.cities.FormattingEnabled = true;
+            this.cities.Items.AddRange(new object[] {
+            "Riyadh",
+            "Jeddah",
+            "Dubai",
+            "Abu Dhabi",
+            "Doha",
+            "Manama",
+            "Kuwait City",
+            "Muscat",
+            "Amman",
+            "Beirut",
+            "Baghdad",
+            "Erbil",
+            "Damascus",
+            "Tehran",
+            "Mashhad",
+            "Ankara",
+            "Istanbul",
+            "Cairo",
+            "Alexandria",
+            "Tel Aviv"});
+            this.cities.Location = new System.Drawing.Point(92, 218);
+            this.cities.Name = "cities";
+            this.cities.Size = new System.Drawing.Size(121, 21);
+            this.cities.TabIndex = 18;
+            // 
             // gender
             // 
             this.gender.Controls.Add(this.male);
@@ -334,35 +363,6 @@ namespace DataDemoLogin
             this.label7.TabIndex = 16;
             this.label7.Text = "login";
             // 
-            // cities
-            // 
-            this.cities.FormattingEnabled = true;
-            this.cities.Items.AddRange(new object[] {
-            "Riyadh",
-            "Jeddah",
-            "Dubai",
-            "Abu Dhabi",
-            "Doha",
-            "Manama",
-            "Kuwait City",
-            "Muscat",
-            "Amman",
-            "Beirut",
-            "Baghdad",
-            "Erbil",
-            "Damascus",
-            "Tehran",
-            "Mashhad",
-            "Ankara",
-            "Istanbul",
-            "Cairo",
-            "Alexandria",
-            "Tel Aviv"});
-            this.cities.Location = new System.Drawing.Point(92, 218);
-            this.cities.Name = "cities";
-            this.cities.Size = new System.Drawing.Size(121, 21);
-            this.cities.TabIndex = 18;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,6 +373,7 @@ namespace DataDemoLogin
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gender.ResumeLayout(false);

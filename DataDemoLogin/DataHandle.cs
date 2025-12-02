@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Windows.Forms;
+using System.Xml.Linq;
 
 /// <summary>
 /// Summary description for DataHandle
@@ -18,9 +20,10 @@ public class DataHandle
 
     public DataHandle()//constructor
     {
-        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\User\Downloads\ofeklogin\DataDemoLogin\Database1.mdf;Integrated Security=True";
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\User\Source\Repos\ofeklogin\DataDemoLogin\Database1.mdf;Integrated Security=True";
         connection = new SqlConnection(connectionString);
         cmd = new SqlCommand();
+        cmd.Connection = connection;
 
     }
 
@@ -47,13 +50,10 @@ public class DataHandle
 
     public void AddUser(string username, string password, string fname, string lname, string email, string city, string gender)//adds user's info to the query
     {
-        cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO Users VALUES('1234, 'aa'')";
-        connection.Open();
-        cmd.ExecuteNonQuery();
+
         string error = "";
         int success = 0;
-        if (fname != null || lname != null || username != null || password != null || email != null || city != null || gender != null)
+        if (fname == null || lname == null || username == null || password == null || email == null || city == null || gender == null)
         {
             error += "You must fill all fields!";
             success--;
@@ -74,10 +74,28 @@ public class DataHandle
             error += "Password is not strong enough. ";
             success--;
         }
+        int x = 0;
+        if (success == 0)
+        {
+            cmd.CommandText = $"INSERT INTO Users (username,password,fname,lname,email,city,gender) VALUES ('{username}','{password}','{fname}','{lname}','{email}','{city}','{gender}')";
+            connection.Open();
+            x = cmd.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        if (x > 0 && success == 0)
+        {
+            MessageBox.Show("regist ok");
+        }
+
+        else
+            MessageBox.Show("regist not ok: " + error);
+        success = 0;
+    
 
 
 
-    }
+}
 
 
     public static bool IsBasicEmailFormat(string email)
